@@ -1,0 +1,21 @@
+# simulated users; scale to 0 to stop: kubectl scale deploy/loadgen --replicas=0
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgen
+spec:
+  selector:
+    matchLabels:
+      app: loadgen
+  template:
+    metadata:
+      labels:
+        app: loadgen
+    spec:
+      containers:
+        - name: loadgen
+          image: calculator:dev
+          command: ["node", "loadgen.ts"]
+          env:
+            - name: CALCULATOR_URL
+              value: http://calculator:8080

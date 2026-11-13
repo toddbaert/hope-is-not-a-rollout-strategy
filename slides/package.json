@@ -1,0 +1,17 @@
+{
+  "name": "slides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@fontsource/architects-daughter": "^5.3.0",
+    "@fontsource/fira-code": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@openfeature/slidev-theme-open-feature": "^1.1.0",
+    "@slidev/cli": "^52.20.1"
+  }
+}

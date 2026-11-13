@@ -1,0 +1,4 @@
+CERT_MANAGER_VERSION=v1.21.3
+OFO_VERSION=v0.9.4
+OLLAMA_IMAGE=ollama/ollama:0.40.13
+MODELS="qwen2.5:0.5b qwen2.5:1.5b qwen2.5:7b"

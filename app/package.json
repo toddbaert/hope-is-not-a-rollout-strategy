@@ -1,0 +1,18 @@
+{
+  "name": "calculator",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@grpc/grpc-js": "~1.14.0",
+    "@openfeature/core": "^1.12.0",
+    "@openfeature/flagd-provider": "^0.18.0",
+    "@openfeature/open-telemetry-hooks": "^1.0.0",
+    "@openfeature/server-sdk": "^1.23.0",
+    "@opentelemetry/api": "^1.10.0",
+    "@opentelemetry/api-logs": "^0.205.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.82.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2"
+  }
+}

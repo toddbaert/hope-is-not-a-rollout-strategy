@@ -1,0 +1,47 @@
+apiVersion: core.openfeature.dev/v1beta1
+kind: FeatureFlag
+metadata:
+  name: calculator-flags
+spec:
+  flagSpec:
+    flags:
+
+      input-guardrail:
+        state: ENABLED
+        defaultVariant: "off"
+        variants:
+          "on": true
+          "off": false
+
+      llm-model:
+        state: ENABLED
+        defaultVariant: 1.5b
+        variants:
+          0.5b: qwen2.5:0.5b
+          1.5b: qwen2.5:1.5b
+          7b: qwen2.5:7b
+
+      llm-temperature:
+        state: ENABLED
+        defaultVariant: default
+        variants:
+          default: 0.8
+          "0": 0
+          "0.5": 0.5
+          "1": 1
+
+      llm-prompt:
+        state: ENABLED
+        defaultVariant: answer-only
+        variants:
+          answer-only: You are a calculator. Reply with only the numeric answer.
+          reasoning: You are a calculator. Think step by step, then give only the final numeric answer on the last line.
+---
+apiVersion: core.openfeature.dev/v1beta1
+kind: FeatureFlagSource
+metadata:
+  name: flag-source
+spec:
+  sources:
+    - source: default/calculator-flags
+      provider: kubernetes

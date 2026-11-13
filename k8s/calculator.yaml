@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator
+spec:
+  selector:
+    matchLabels:
+      app: calculator
+  template:
+    metadata:
+      labels:
+        app: calculator
+      annotations:
+        # the operator injects a flagd sidecar backed by the FeatureFlag resource
+        openfeature.dev/enabled: "true"
+        openfeature.dev/featureflagsource: flag-source
+    spec:
+      containers:
+        - name: calculator
+          image: calculator:dev
+          ports:
+            - containerPort: 8080
+          env:
+            - name: OLLAMA_URL
+              value: http://ollama:11434
+            - name: OTEL_SERVICE_NAME
+              value: calculator
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://lgtm:4318
+            - name: OTEL_METRICS_EXPORTER
+              value: otlp
+            - name: OTEL_LOGS_EXPORTER
+              value: none
+            - name: OTEL_METRIC_EXPORT_INTERVAL
+              value: "5000"
+            # outgoing calls only; the app creates its own request span
+            - name: OTEL_NODE_ENABLED_INSTRUMENTATIONS
+              value: undici
+            # skip cloud metadata lookups, which warn outside a cloud
+            - name: OTEL_NODE_RESOURCE_DETECTORS
+              value: env,host,os,process
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculator
+spec:
+  type: NodePort
+  selector:
+    app: calculator
+  ports:
+    - port: 8080
+      nodePort: 30080
